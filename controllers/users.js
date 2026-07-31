@@ -53,7 +53,24 @@ const login = (req, res) => {
     });
 };
 
+const getCurrentUser = (req, res) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+      return res.status(200).send(user);
+    })
+    .catch((err) => {
+      if (err.name === "CastError") {
+        return res.status(400).send({ message: "Invalid user ID format" });
+      }
+      return res.status(500).send({ message: "An error has occurred on the server" });
+    });
+};
+
 module.exports = {
   createUser,
   login,
+  getCurrentUser,
 };
