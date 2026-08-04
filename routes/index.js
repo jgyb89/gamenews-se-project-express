@@ -13,7 +13,7 @@ router.use(auth);
 
 // 3. Protected Routes
 router.use("/users", userRouter);
-router.use("/posts", postRouter); // ADD POST ROUTE HERE
+router.use("/posts", postRouter);
 
 // 4. Fallback Route
 router.use((req, res) => {
