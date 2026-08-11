@@ -3,10 +3,11 @@ const { createUser, login } = require("../controllers/users");
 const userRouter = require("./users");
 const postRouter = require("./posts"); // IMPORT NEW POST ROUTER
 const auth = require("../middlewares/auth");
+const { validateUserCreation, validateLogin } = require("../middlewares/validation");
 
 // 1. Unprotected Authentication Routes
-router.post("/signup", createUser);
-router.post("/signin", login);
+router.post("/signup", validateUserCreation, createUser);
+router.post("/signin", validateLogin, login);
 
 // 2. Authorization Gateway
 router.use(auth);

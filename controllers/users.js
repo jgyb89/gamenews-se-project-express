@@ -14,7 +14,7 @@ const createUser = (req, res) => {
   return bcrypt
     .hash(password, 10)
     .then((hashedPassword) =>
-      User.create({ name, avatar, email, password: hashedPassword })
+      User.create({ name, avatar, email, password: hashedPassword }),
     )
     .then((user) => {
       // Strip the password before returning the user object
@@ -26,9 +26,13 @@ const createUser = (req, res) => {
       if (err.name === "ValidationError") {
         res.status(400).send({ message: "Invalid user data passed" });
       } else if (err.code === 11000) {
-        res.status(409).send({ message: "A user with this email already exists" });
+        res
+          .status(409)
+          .send({ message: "A user with this email already exists" });
       } else {
-        res.status(500).send({ message: "An error has occurred on the server" });
+        res
+          .status(500)
+          .send({ message: "An error has occurred on the server" });
       }
     });
 };
@@ -65,7 +69,9 @@ const getCurrentUser = (req, res) => {
       if (err.name === "CastError") {
         return res.status(400).send({ message: "Invalid user ID format" });
       }
-      return res.status(500).send({ message: "An error has occurred on the server" });
+      return res
+        .status(500)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
